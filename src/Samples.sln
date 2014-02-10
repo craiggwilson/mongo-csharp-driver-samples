@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{52
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoExport", "MongoExport\MongoExport.csproj", "{44D4A5EA-C7B9-4292-AC5B-90B6CB163AE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoExport.Tests", "MongoExport.Tests\MongoExport.Tests.csproj", "{7D6033F5-F152-4EF9-A6C6-7C3AD75A2059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{CC96DD4D-CAC8-435A-BFA9-D27885FD6E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC96DD4D-CAC8-435A-BFA9-D27885FD6E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC96DD4D-CAC8-435A-BFA9-D27885FD6E6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D4A5EA-C7B9-4292-AC5B-90B6CB163AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D4A5EA-C7B9-4292-AC5B-90B6CB163AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D4A5EA-C7B9-4292-AC5B-90B6CB163AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D4A5EA-C7B9-4292-AC5B-90B6CB163AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D6033F5-F152-4EF9-A6C6-7C3AD75A2059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D6033F5-F152-4EF9-A6C6-7C3AD75A2059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D6033F5-F152-4EF9-A6C6-7C3AD75A2059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D6033F5-F152-4EF9-A6C6-7C3AD75A2059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
