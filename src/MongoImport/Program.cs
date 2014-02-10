@@ -31,27 +31,27 @@ namespace MongoImport
             builder.Setup(x => x.Hostname)
                 .As('h', "host")
                 .SetDefault("localhost")
-                .WithDescription("The hostname of the database.");
+                .WithDescription("Specifies a resolvable hostname for the mongod from which you want to export data.");
 
             builder.Setup(x => x.Port)
                 .As("port")
                 .SetDefault(27017)
-                .WithDescription("The port of the database.");
+                .WithDescription("Specifies the port number, if the MongoDB instance is not running on the standard port. (i.e. 27017)");
 
             builder.Setup(x => x.DatabaseName)
                 .As('d', "db")
                 .Required()
-                .WithDescription("database");
+                .WithDescription("Specifies the name of the database that contains the collection you want to export.");
 
             builder.Setup(x => x.CollectionName)
                 .As('c', "collection")
                 .Required()
-                .WithDescription("collection");
+                .WithDescription("Specifies the collection that you want mongoexport to export.");
 
             builder.Setup(x => x.File)
                 .As("file")
                 .Required()
-                .WithDescription("The file from which to read the data.");
+                .WithDescription("Specifies a file to read the data from. If you do not specify a file name, the mongoimport reads data from standard input (e.g. stdin).");
 
             builder.Setup(X => X.Type)
                 .As("type")

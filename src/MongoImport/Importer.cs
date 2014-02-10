@@ -18,7 +18,6 @@ namespace MongoImport
             const int importBatchSize = 100;
             int totalCount = 0;
             Stopwatch stopwatch;
-            var source = GetSourceParser(applicationModel.Type);
 
             var settings = new MongoClientSettings
             {
@@ -28,13 +27,13 @@ namespace MongoImport
 
             var client = new MongoClient(settings);
             var database = client.GetServer().GetDatabase(applicationModel.DatabaseName);
-            var collection = database.GetCollection<RawBsonDocument>(applicationModel.CollectionName);
+            var collection = database.GetCollection<BsonDocument>(applicationModel.CollectionName);
 
-            using (var stream = new FileStream(applicationModel.File, FileMode.Open))
+            using (var reader = GetSourceReader(applicationModel))
             {
                 stopwatch = Stopwatch.StartNew();
-                List<RawBsonDocument> documents = new List<RawBsonDocument>();
-                foreach(var document in source.ReadDocuments(stream))
+                var documents = new List<BsonDocument>();
+                foreach (var document in reader.ReadDocuments())
                 {
                     documents.Add(document);
                     totalCount++;
@@ -58,17 +57,30 @@ namespace MongoImport
             Console.WriteLine("Finished in {0}.", stopwatch.Elapsed);
         }
 
-        private ISourceParser GetSourceParser(string type)
+        private ISourceReader GetSourceReader(ApplicationModel applicationModel)
         {
-            if(type.Equals("json", StringComparison.InvariantCultureIgnoreCase))
+            TextReader textReader;
+            bool closeTextReader;
+            if(string.IsNullOrEmpty(applicationModel.File))
             {
-                return new JsonSourceParser();
+                textReader = Console.In;
+                closeTextReader = false;
+            }
+            else
+            {
+                textReader = new StreamReader(applicationModel.File);
+                closeTextReader = true;
             }
 
-            throw new NotSupportedException(string.Format("{0} is not a supported type.", type));
+            if(applicationModel.Type.Equals("json", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new JsonSourceReader(textReader, closeTextReader);
+            }
+
+            throw new NotSupportedException(string.Format("{0} is not a supported type.", applicationModel.Type));
         }
 
-        private void InsertBatch(MongoCollection<RawBsonDocument> collection, List<RawBsonDocument> documents)
+        private void InsertBatch(MongoCollection<BsonDocument> collection, List<BsonDocument> documents)
         {
             collection.InsertBatch(documents);
         }

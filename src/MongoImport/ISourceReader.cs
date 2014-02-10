@@ -8,8 +8,8 @@ using MongoDB.Bson;
 
 namespace MongoImport
 {
-    internal interface ISourceParser
+    internal interface ISourceReader : IDisposable
     {
-        IEnumerable<RawBsonDocument> ReadDocuments(Stream stream);
+        IEnumerable<BsonDocument> ReadDocuments();
     }
 }
