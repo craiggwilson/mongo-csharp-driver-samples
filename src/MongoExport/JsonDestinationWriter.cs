@@ -32,6 +32,7 @@ namespace MongoExport
         {
             if (_closeWriter)
             {
+                _writer.Flush();
                 _writer.Dispose();
             }
         }

@@ -18,8 +18,6 @@ namespace MongoExport
             int totalCount = 0;
             Stopwatch stopwatch;
 
-            bool outputToConsole = !string.IsNullOrEmpty(applicationModel.File);
-            
             var settings = new MongoClientSettings
             {
                 ConnectionMode = ConnectionMode.Direct,
@@ -28,41 +26,14 @@ namespace MongoExport
 
             var client = new MongoClient(settings);
             var database = client.GetServer().GetDatabase(applicationModel.DatabaseName);
-            var collection = database.GetCollection<RawBsonDocument>(applicationModel.CollectionName);
+            var collection = database.GetCollection<BsonDocument>(applicationModel.CollectionName);
 
             using(var writer = GetDestinationWriter(applicationModel))
             {
                 stopwatch = Stopwatch.StartNew();
-
                 var cursor = collection.Find(new QueryDocument()).SetBatchSize(exportBatchSize);
-                var documents = new List<RawBsonDocument>();
-                foreach(var document in cursor)
-                {
-                    documents.Add(document);
-                    totalCount++;
-                    if(documents.Count == exportBatchSize)
-                    {
-                        writer.Write(documents);
-                        documents.Clear();
-                        if (outputToConsole)
-                        {
-                            Console.WriteLine("{0} - Fetched {1}", stopwatch.Elapsed, totalCount);
-                        }
-                    }
-                }
-
-                writer.Write(documents);
-                if (outputToConsole)
-                {
-                    Console.WriteLine("{0} - Fetched {1}", stopwatch.Elapsed, totalCount);
-                }
-
+                writer.Write(cursor);
                 stopwatch.Stop();
-            }
-
-            if (outputToConsole)
-            {
-                Console.WriteLine("Finished in {0}.", stopwatch.Elapsed);
             }
         }
 
