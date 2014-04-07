@@ -1,0 +1,75 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Welcome to Milieu</h1>
+            <img src="@Url.Content("~/content/images/big_map.png")" />
+            <p>
+                Milieu is an open source .NET based MongoDB backed location check in app.
+            </p>
+            <p>
+                It uses Nancy, Bootstrap and MongoDB.
+            </p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="well">
+                @if (Html.IsAuthenticated)
+                {
+                    if (true) // check if user is an admin...
+                    {
+                        <h4>How are people using Milieu?</h4>
+                        <p>
+                            Average checkins per-user: ???
+                        </p>
+                        <p>
+                            Average checkins per venue: ???
+                        </p>
+                    }
+                    else
+                    {
+                        <p>You are logged in. Go checkin somewhere.</p>
+                    }
+                }
+                else
+                {
+                    <h3>Login</h3>
+                    <form role="form" action="@Url.Content("~/login")" method="post">
+                        <div class="form-group">
+                            <label for="email">Email: </label>
+                            <input class="form-control" name="email" type="text" size="30" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password: </label>
+                            <input class="form-control" name="password" type="password" size="30" />
+                        </div>
+                        <input class="btn-lg btn-primary" name="submit" type="submit" value="Login" />
+                    </form>
+                }
+
+                @if (!Html.IsAuthenticated)
+                {
+                    <div class="well">
+                        <h3>Join Us</h3>
+                        <form role="form" action="@Url.Content("~/register")" method="post">
+                            <div class="form-group">
+                                <label for="name">Name: </label>
+                                <input class="form-control" name="name" type="text" size="30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email: </label>
+                                <input class="form-control" name="email" type="text" size="30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password: </label>
+                                <input class="form-control" name="password" type="password" size="30" />
+                            </div>
+                            <input class="btn-lg btn-primary" name="submit" type="submit" value="Join" />
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
