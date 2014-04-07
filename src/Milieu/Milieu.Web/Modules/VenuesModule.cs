@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Milieu.Web.Models;
 using Nancy;
+using Nancy.Security;
 
-namespace Milieu.Web
+namespace Milieu.Web.Modules
 {
     public class VenuesModule : NancyModule
     {
         public VenuesModule()
             : base("/venues")
         {
+            this.RequiresAuthentication();
+
             Get[""] = _ =>
             {
                 var venue = new VenueModel

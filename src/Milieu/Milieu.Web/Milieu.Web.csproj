@@ -39,8 +39,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.0\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.22.2\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Authentication.Forms">
+      <HintPath>..\packages\Nancy.Authentication.Forms.0.22.2\lib\net40\Nancy.Authentication.Forms.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Hosting.Aspnet">
       <HintPath>..\packages\Nancy.Hosting.Aspnet.0.22.2\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
@@ -116,7 +125,7 @@
     <Content Include="Content\scripts\jquery\jquery-1.9.0.min.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Home\Index.cshtml">
+    <Content Include="Views\Default\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Layout.cshtml">
@@ -126,6 +135,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\_ViewStart.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Default\Login.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Web.Debug.config">
@@ -139,12 +151,18 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HomeModule.cs" />
+    <Compile Include="Domain\MilieuDataContext.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Modules\DefaultModule.cs" />
     <Compile Include="MilieuBootstrapper.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="MilieuUser.cs" />
+    <Compile Include="MilieuUserMapper.cs" />
     <Compile Include="Models\VenueModel.cs" />
+    <Compile Include="Modules\MilieuModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VenuesModule.cs" />
+    <Compile Include="Modules\VenuesModule.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
