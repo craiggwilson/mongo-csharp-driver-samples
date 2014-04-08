@@ -8,7 +8,13 @@ using Nancy;
 
 namespace Milieu.Web.Modules
 {
-    public class MilieuModule : NancyModule
+    public abstract class MilieuModule : NancyModule
     {
+        protected MilieuModule()
+        { }
+
+        protected MilieuModule(string modulePath)
+            : base(modulePath)
+        { }
     }
 }

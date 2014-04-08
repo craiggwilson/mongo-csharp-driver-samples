@@ -15,9 +15,19 @@ namespace Milieu.Web.Domain
             _db = db;
         }
 
+        public MongoCollection<Checkin> Checkins
+        {
+            get { return _db.GetCollection<Checkin>("checkins"); }
+        }
+
         public MongoCollection<User> Users
         {
             get { return _db.GetCollection<User>("users"); }
+        }
+
+        public MongoCollection<Venue> Venues
+        {
+            get { return _db.GetCollection<Venue>("venues"); }
         }
     }
 }

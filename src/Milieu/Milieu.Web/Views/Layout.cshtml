@@ -29,8 +29,8 @@
                 <p class="navbar-text">
                     @if (Html.IsAuthenticated)
                     {
-                        <a href="@Url.Content("~/user/craiggwilson/dashboard")">
-                            <img height="30" width="30" src="http://www.gravatar.com/avatar/craiggwilson.png" />
+                        <a href="@Url.Content("~/user/@Html.CurrentUser.UserName")">
+                            <img height="30" width="30" src="@Html.CurrentUserGravatar()" />
 
                         </a>
                         <a href="/logout">Logout</a>

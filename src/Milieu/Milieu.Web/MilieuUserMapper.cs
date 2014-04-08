@@ -22,7 +22,7 @@ namespace Milieu.Web
 
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            var user = _context.Users.AsQueryable().SingleOrDefault(x => x.Id == identifier);
+            var user = _context.Users.AsQueryable().SingleOrDefault(x => x.Id == identifier.ToString("N"));
             if (user == null)
                 return null;
 

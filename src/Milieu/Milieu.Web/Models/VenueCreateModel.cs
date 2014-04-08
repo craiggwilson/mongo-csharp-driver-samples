@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace Milieu.Web.Models
 {
-    public class VenueModel
+    public class VenueCreateModel
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
+
+        public long[] Geo { get; set; }
     }
 }

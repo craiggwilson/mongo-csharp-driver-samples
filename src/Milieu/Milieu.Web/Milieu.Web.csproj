@@ -140,6 +140,15 @@
     <Content Include="Views\Default\Login.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Venues\View.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\User\Dashboard.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Venues\Create.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -151,19 +160,28 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Venue.cs" />
+    <Compile Include="Domain\Checkin.cs" />
+    <Compile Include="Domain\Claims.cs" />
     <Compile Include="Domain\MilieuDataContext.cs" />
+    <Compile Include="HtmlHelpersExtensions.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Models\UserDashboardModel.cs" />
+    <Compile Include="Models\VenueCreateModel.cs" />
+    <Compile Include="Models\VenueListModel.cs" />
     <Compile Include="Modules\DefaultModule.cs" />
     <Compile Include="MilieuBootstrapper.cs" />
     <Compile Include="MilieuUser.cs" />
     <Compile Include="MilieuUserMapper.cs" />
     <Compile Include="Models\VenueModel.cs" />
     <Compile Include="Modules\MilieuModule.cs" />
+    <Compile Include="Modules\UserModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\VenuesModule.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

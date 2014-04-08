@@ -1,4 +1,4 @@
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+﻿@inherits NancyRazorViewBase<dynamic>
 
 <div class="container">
     <div class="row">
@@ -17,7 +17,7 @@
             <div class="well">
                 @if (Html.IsAuthenticated)
                 {
-                    if (true) // check if user is an admin...
+                    if (Html.CurrentUser.HasClaim("Admin"))
                     {
                         <h4>How are people using Milieu?</h4>
                         <p>

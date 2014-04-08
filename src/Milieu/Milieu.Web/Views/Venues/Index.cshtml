@@ -1,12 +1,16 @@
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Milieu.Web.Models.VenueModel>
+﻿@inherits NancyRazorViewBase<VenueListModel>
 
 <table>
     <tr>
-        <td>Id:</td>
-        <td>@Model.Id</td>
+        <th>Id</th>
+        <th>Name</th>
     </tr>
-    <tr>
-        <td>Name:</td>
-        <td>@Model.Name</td>
-    </tr>
+    @foreach(var venue in @Model.Venues)
+    { 
+        <tr>
+            <td>@venue.Name</td>
+            <td><a href="@Url.Content("~/venues/" + venue.Id)">View</a></td>
+            <td><a href="@Url.Content("~/venues/" + venue.Id + "/checkin")">Checkin</a></td>
+        </tr>
+    }
 </table>

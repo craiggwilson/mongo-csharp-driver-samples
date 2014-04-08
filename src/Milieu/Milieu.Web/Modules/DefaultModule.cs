@@ -29,7 +29,7 @@ namespace Milieu.Web.Modules
 
             Get["/login"] = p =>
             {
-                return View["Login", p];
+                return View["Login"];
             };
 
             Post["/login"] = p =>
@@ -39,13 +39,13 @@ namespace Milieu.Web.Modules
                 var user = _dataContext.Users.AsQueryable()
                     .SingleOrDefault(x => x.Email == model.Email);
 
-                // AHAHAHA PLAINTEXT!!!!!!!!!
+                // THESE ARE NOT THE PLAINTEXT PASSWORDS YOU ARE LOOKING FOR!
                 if(user == null || user.Password != model.Password)
                 {
                     return "Username or password are invalid.";
                 }
 
-                return this.Login(user.Id);
+                return this.Login(Guid.Parse(user.Id), fallbackRedirectUrl: "~/user/" + user.Email);
             };
 
             Get["/logout"] = _ =>
@@ -59,16 +59,24 @@ namespace Milieu.Web.Modules
 
                 var user = new User
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     Name = model.Name,
                     Email = model.Email,
                     Password = model.Password,
-                    Claims = new[] { "VenueCheckin" }
+                    Claims = new[] { Claims.VenueCheckin, Claims.UserDashboard },
+                    VenueCheckins = new Dictionary<string, User.VenueCheckin>()
                 };
 
-                _dataContext.Users.Save(user);
+                try
+                {
+                    _dataContext.Users.Save(user);
+                }
+                catch(MongoDuplicateKeyException)
+                {
+                    return "Someone already has your username.";
+                }
 
-                return this.Response.AsRedirect("~/login");
+                return this.Response.AsRedirect(string.Format("~/user/{0}", user.Email));
             };
         }
     }

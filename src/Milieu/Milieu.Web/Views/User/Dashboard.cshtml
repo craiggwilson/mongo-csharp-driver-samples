@@ -1,0 +1,26 @@
+﻿@inherits NancyRazorViewBase<UserDashboardModel>
+
+<div class="container">
+    <div class="content">
+        <div class="page-header">
+            <h1>Dashboard</h1>
+            <hr />
+            <h2>Profile</h2>
+            <img src="@Html.UserGravatar(Model.Email)" />
+            <h3>@Model.Name</h3>
+            @if(Html.CurrentUser.HasClaim("Admin"))
+            {
+                <a href="@Url.Content("~/user/" + Model.Email + "/profile")">Profile</a>
+            }
+            <h3>Checkin Stats</h3>
+            <div>Total Checkins: @Model.Stats.TotalCheckins</div>
+            <div>Total Locations: @Model.Stats.TotalLocations</div>
+            @if(Model.Stats.LastVenueName != null)
+            {
+                <div>Last Checked into @Model.Stats.LastVenueName at @Model.Stats.LastCheckinTimeUtc</div>
+            }
+            <h2>Checkins</h2>
+            <div>do something here</div>
+        </div>
+    </div>
+</div>
