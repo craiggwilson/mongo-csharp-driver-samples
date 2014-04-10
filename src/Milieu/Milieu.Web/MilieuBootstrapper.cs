@@ -4,32 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Milieu.Web.Domain;
+using Milieu.Web.Utilities;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Options;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Nancy;
 using Nancy.Authentication.Forms;
+using Nancy.Bootstrapper;
+using Nancy.TinyIoc;
 using Nancy.ViewEngines.Razor;
 
 namespace Milieu.Web
 {
     public class MilieuBootstrapper : DefaultNancyBootstrapper
     {
-        protected override void ConfigureApplicationContainer(Nancy.TinyIoc.TinyIoCContainer container)
+        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
+            ConfigureMongoDB();
+
             var db = new MongoClient()
                 .GetServer()
                 .GetDatabase("milieu");
 
+            var data = new MilieuDataContext(db);
             container.Register(new MilieuDataContext(db));
+
+            AddDefaultData(data);
         }
 
-        protected override void ConfigureRequestContainer(Nancy.TinyIoc.TinyIoCContainer container, NancyContext context)
+        protected override void ConfigureRequestContainer(TinyIoCContainer container, NancyContext context)
         {
             base.ConfigureRequestContainer(container, context);
             container.Register<IUserMapper, MilieuUserMapper>();
         }
 
-        protected override void RequestStartup(Nancy.TinyIoc.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines, NancyContext context)
+        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
             base.RequestStartup(container, pipelines, context);
 
@@ -39,6 +52,56 @@ namespace Milieu.Web
                 UserMapper = container.Resolve<IUserMapper>()
             };
             FormsAuthentication.Enable(this.ApplicationPipelines, formsAuthConfig);
+        }
+
+        private void ConfigureMongoDB()
+        {
+            MongoDefaults.GuidRepresentation = GuidRepresentation.Standard;
+
+            var pack = new ConventionPack();
+            pack.Add(new CamelCaseElementNameConvention());
+            pack.Add(new IgnoreIfNullConvention(true));
+
+            ConventionRegistry.Register("Milieu Conventions", pack, t => true);
+
+            BsonClassMap.RegisterClassMap<User>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapMember(x => x.VenueCheckins)
+                    .SetSerializer(new GuidDictionaryDocumentSerializer<User.VenueCheckin>());
+            });
+        }
+
+        private void AddDefaultData(MilieuDataContext data)
+        {
+            if (data.Users.Count() == 0)
+            {
+                var adminUser = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Craig Wilson",
+                    Email = "craiggwilson@gmail.com",
+                    Password = "password",
+                    Claims = new List<string> { Claims.Admin, Claims.UserDashboard, Claims.VenueCheckin }
+                };
+
+                data.Users.Save(adminUser);
+            }
+
+            if(data.Venues.Count() == 0)
+            {
+                var venue1 = new Venue
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Panera Bread",
+                    Location = new Venue.VenueLocation
+                    {
+                        Geo = new[] { -96.772827, 32.872667 }
+                    }
+                };
+
+                data.Venues.Save(venue1);
+            }
         }
     }
 }

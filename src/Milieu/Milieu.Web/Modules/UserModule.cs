@@ -40,7 +40,7 @@ namespace Milieu.Web.Modules
                     {
                         LastCheckinTimeUtc = user.LastCheckin == null ? (DateTime?)null : user.LastCheckin.TimeUtc,
                         TotalCheckins = user.TotalCheckins,
-                        TotalLocations = user.VenueCheckins.Count
+                        TotalLocations = user.VenueCheckins == null ? 0 : user.VenueCheckins.Count
                     }
                 };
 

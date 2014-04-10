@@ -50,7 +50,7 @@ namespace Milieu.Web.Modules
 
                 var venue = new Venue
                 {
-                    Id = Guid.NewGuid().ToString("N"),
+                    Id = Guid.NewGuid(),
                     Name = model.Name,
                     Location = new Venue.VenueLocation { Geo = model.Geo }
                 };
@@ -63,7 +63,7 @@ namespace Milieu.Web.Modules
             {
                 Guid id = p.id;
                 var venue = _data.Venues.AsQueryable()
-                    .SingleOrDefault(x => x.Id == id.ToString("N"));
+                    .SingleOrDefault(x => x.Id == id);
 
                 if (venue == null)
                     return "No such venue exists.";
@@ -82,7 +82,7 @@ namespace Milieu.Web.Modules
             {
                 Guid id = p.id;
                 var venue = _data.Venues.AsQueryable()
-                    .SingleOrDefault(x => x.Id == id.ToString("N"));
+                    .SingleOrDefault(x => x.Id == id);
 
                 if (venue == null)
                     return "No such venue exists.";
@@ -95,9 +95,9 @@ namespace Milieu.Web.Modules
                     Query = Query<User>.Where(x => x.Email == Context.CurrentUser.UserName),
                     Update = Update.Combine(
                         Update<User>.Inc(x => x.TotalCheckins, 1),
-                        Update.Inc("VenueCheckins." + venue.Id + ".Count", 1),
-                        Update.Set("VenueCheckins." + venue.Id + ".Name", venue.Name),
-                        Update.Set("VenueCheckins." + venue.Id + ".TimeUtc", checkinTime),
+                        Update<User>.Inc(x => x.VenueCheckins[venue.Id].Count, 1),
+                        Update<User>.Set(x => x.VenueCheckins[venue.Id].Name, venue.Name),
+                        Update<User>.Set(x => x.VenueCheckins[venue.Id].TimeUtc, checkinTime),
                         Update<User>.Set(x => x.LastCheckin.TimeUtc, checkinTime),
                         Update<User>.Set(x => x.LastCheckin.VenueId, venue.Id),
                         Update<User>.Set(x => x.LastCheckin.VenueName, venue.Name)),

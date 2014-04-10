@@ -11,7 +11,7 @@ namespace Milieu.Web.Models
 
         public class Venue
         {
-            public string Id { get; set; }
+            public Guid Id { get; set; }
 
             public string Name { get; set; }
         }

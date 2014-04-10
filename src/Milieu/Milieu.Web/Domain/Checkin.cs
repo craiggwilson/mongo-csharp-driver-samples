@@ -7,6 +7,11 @@ namespace Milieu.Web.Domain
 {
     public class Checkin
     {
+        public Checkin()
+        {
+            TimesUtc = new List<DateTime>();
+        }
+
         public CheckinId Id { get; set; }
 
         public string VenueName { get; set; }
@@ -15,9 +20,9 @@ namespace Milieu.Web.Domain
 
         public class CheckinId
         {
-            public string UserId { get; set; }
+            public Guid UserId { get; set; }
 
-            public string VenueId { get; set; }
+            public Guid VenueId { get; set; }
         }
     }
 }

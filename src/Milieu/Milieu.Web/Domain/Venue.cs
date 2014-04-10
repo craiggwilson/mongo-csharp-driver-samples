@@ -7,7 +7,7 @@ namespace Milieu.Web.Domain
 {
     public class Venue
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -19,7 +19,7 @@ namespace Milieu.Web.Domain
 
         public class VenueLocation
         {
-            public long[] Geo { get; set; }
+            public double[] Geo { get; set; }
         }
     }
 }

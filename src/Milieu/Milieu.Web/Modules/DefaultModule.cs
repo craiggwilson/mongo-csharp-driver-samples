@@ -45,7 +45,7 @@ namespace Milieu.Web.Modules
                     return "Username or password are invalid.";
                 }
 
-                return this.Login(Guid.Parse(user.Id), fallbackRedirectUrl: "~/user/" + user.Email);
+                return this.Login(user.Id, fallbackRedirectUrl: "~/user/" + user.Email);
             };
 
             Get["/logout"] = _ =>
@@ -59,12 +59,11 @@ namespace Milieu.Web.Modules
 
                 var user = new User
                 {
-                    Id = Guid.NewGuid().ToString("N"),
+                    Id = Guid.NewGuid(),
                     Name = model.Name,
                     Email = model.Email,
                     Password = model.Password,
-                    Claims = new[] { Claims.VenueCheckin, Claims.UserDashboard },
-                    VenueCheckins = new Dictionary<string, User.VenueCheckin>()
+                    Claims = new List<string> { Claims.VenueCheckin, Claims.UserDashboard },
                 };
 
                 try

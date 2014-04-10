@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Milieu.Web.Utilities;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 
@@ -9,7 +10,14 @@ namespace Milieu.Web.Domain
 {
     public class User
     {
-        public string Id { get; set; }
+        public User()
+        {
+            Claims = new List<string>();
+            LastCheckin = new LastVenueCheckin();
+            VenueCheckins = new Dictionary<Guid, VenueCheckin>();
+        }
+
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -17,22 +25,21 @@ namespace Milieu.Web.Domain
 
         public string Password { get; set; }
 
-        public IEnumerable<string> Claims { get; set; }
+        public List<string> Claims { get; set; }
 
         public int TotalCheckins { get; set; }
 
         public LastVenueCheckin LastCheckin { get; set; }
 
-        [BsonDictionaryOptions(DictionaryRepresentation.Document)]
-        public Dictionary<string, VenueCheckin> VenueCheckins { get; set; }
+        public Dictionary<Guid, VenueCheckin> VenueCheckins { get; private set; }
 
         public class LastVenueCheckin
         {
-            public string VenueId { get; set; }
+            public Guid? VenueId { get; set; }
 
             public string VenueName { get; set; }
 
-            public DateTime TimeUtc { get; set; }
+            public DateTime? TimeUtc { get; set; }
         }
 
         public class VenueCheckin
