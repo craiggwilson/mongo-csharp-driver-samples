@@ -11,5 +11,22 @@ namespace Milieu.Web.Models
         public Guid Id { get; set; }
 
         public string Name { get; set; }
+
+        public int TotalCheckins { get; set; }
+
+        public int TotalUsers { get; set; }
+
+        public double[] Geo { get; set; }
+
+        public List<NearbyVenue> Nearby { get; set; }
+
+        public class NearbyVenue
+        {
+            public Guid Id { get; set; }
+
+            public string Name { get; set; }
+
+            public double[] Geo { get; set; }
+        }
     }
 }

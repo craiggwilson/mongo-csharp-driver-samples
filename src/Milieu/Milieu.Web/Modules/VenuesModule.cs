@@ -8,9 +8,11 @@ using Milieu.Web.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver.GeoJsonObjectModel;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
+using MongoDB.Bson;
 
 namespace Milieu.Web.Modules
 {
@@ -32,7 +34,8 @@ namespace Milieu.Web.Modules
                     Venues = _data.Venues.FindAll().Select(x => new VenueListModel.Venue
                     {
                         Id = x.Id,
-                        Name = x.Name
+                        Name = x.Name,
+                        Geo = x.Location.Geo
                     }).ToList()
                 };
 
@@ -68,10 +71,28 @@ namespace Milieu.Web.Modules
                 if (venue == null)
                     return "No such venue exists.";
 
+                // Get Nearby venues
+                // SERVER-13456
+                //var query = Query<Venue>.Near(x => x.Location.Geo, 
+                //    new GeoJsonPoint<GeoJson2DCoordinates>(
+                //        new GeoJson2DCoordinates(venue.Location.Geo[0], venue.Location.Geo[1])));
+                var query = Query<Venue>.Near(x => x.Location.Geo, venue.Location.Geo[0], venue.Location.Geo[1]);
+
+                var nearbyVenues = _data.Venues.Find(query).SetSkip(1).SetLimit(4).ToList();
+
                 var model = new VenueModel
                 {
                     Id = venue.Id,
-                    Name = venue.Name
+                    Name = venue.Name,
+                    Geo = venue.Location.Geo,
+                    TotalCheckins = venue.TotalCheckins,
+                    TotalUsers = venue.TotalUsers,
+                    Nearby = nearbyVenues.Select(x => new VenueModel.NearbyVenue
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Geo = x.Location.Geo
+                    }).ToList()
                 };
 
                 return View["View", model];

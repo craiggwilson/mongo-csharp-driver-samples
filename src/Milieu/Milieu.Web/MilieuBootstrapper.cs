@@ -11,6 +11,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
@@ -24,7 +25,7 @@ namespace Milieu.Web
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            ConfigureMongoDB();
+            ConfigureMongoDBDriver();
 
             var db = new MongoClient()
                 .GetServer()
@@ -33,7 +34,7 @@ namespace Milieu.Web
             var data = new MilieuDataContext(db);
             container.Register(new MilieuDataContext(db));
 
-            AddDefaultData(data);
+            ConfigureMongoDBServer(data);
         }
 
         protected override void ConfigureRequestContainer(TinyIoCContainer container, NancyContext context)
@@ -54,7 +55,7 @@ namespace Milieu.Web
             FormsAuthentication.Enable(this.ApplicationPipelines, formsAuthConfig);
         }
 
-        private void ConfigureMongoDB()
+        private void ConfigureMongoDBDriver()
         {
             MongoDefaults.GuidRepresentation = GuidRepresentation.Standard;
 
@@ -72,8 +73,11 @@ namespace Milieu.Web
             });
         }
 
-        private void AddDefaultData(MilieuDataContext data)
+        private void ConfigureMongoDBServer(MilieuDataContext data)
         {
+            // Create Indexs
+            data.Venues.CreateIndex(IndexKeys<Venue>.GeoSpatial(x => x.Location.Geo));
+
             if (data.Users.Count() == 0)
             {
                 var adminUser = new User

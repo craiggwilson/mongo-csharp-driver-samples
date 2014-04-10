@@ -1,16 +1,33 @@
 ﻿@inherits NancyRazorViewBase<VenueListModel>
 
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-    </tr>
-    @foreach(var venue in @Model.Venues)
-    { 
-        <tr>
-            <td>@venue.Name</td>
-            <td><a href="@Url.Content("~/venues/" + venue.Id)">View</a></td>
-            <td><a href="@Url.Content("~/venues/" + venue.Id + "/checkin")">Checkin</a></td>
-        </tr>
-    }
-</table>
+<div class="container">
+    <div class="content">
+        <h2>Venues</h2>
+        @if (Html.IsAuthenticated && Html.CurrentUser.HasClaim("Admin"))
+        {
+            <a class="btn btn-primary btn-large" href="@Url.Content("~/venues/create")">Add Venue</a>
+        }
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Longitude</th>
+                    <th>Latitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var venue in Model.Venues)
+                { 
+                    <tr>
+                        <td><a href="@Url.Content("~/venues/" + venue.Id)">@venue.Name</a></td>
+                        <td>Address</td>
+                        <td>@venue.Geo[0]</td>
+                        <td>@venue.Geo[1]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
