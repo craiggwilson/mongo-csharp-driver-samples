@@ -16,9 +16,9 @@
         <h2>Nearby Venues</h2>
         @foreach(var venue in Model.Nearby)
         {
-            <h2>
+            <h3>
                 <a href="@Url.Content("~/venue/" + venue.Id)">@venue.Name</a>
-            </h2>
+            </h3>
             <div>
                 MAP
             </div>

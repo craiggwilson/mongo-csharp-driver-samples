@@ -16,7 +16,7 @@ html, body {
 }
 
 #main {
-    padding-top: 100px;
+    padding-top: 60px;
     overflow: visible;
     padding-bottom: 45px;
 }
@@ -24,7 +24,7 @@ html, body {
 
 footer {
     position: relative;
-    margin-top: -41; /* negative value of footer height */
+    margin-top: -41px; /* negative value of footer height */
     height: 40px;
     clear: both;
     border-top: solid 1px #EEE;
@@ -48,7 +48,7 @@ body:before { /* thanks to Maleika (Kohoutec)*/
 }
 
 a.navbar-brand {
-    background-image: url('/images/milieu_sm.png');
+    background-image: url('/content/images/milieu_sm.png');
     background-repeat: no-repeat;
 }
 

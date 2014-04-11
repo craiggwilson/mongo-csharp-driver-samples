@@ -165,6 +165,7 @@
     <Compile Include="Domain\Claims.cs" />
     <Compile Include="Domain\MilieuDataContext.cs" />
     <Compile Include="HtmlHelpersExtensions.cs" />
+    <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Domain\User.cs" />

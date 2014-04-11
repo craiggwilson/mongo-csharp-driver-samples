@@ -55,7 +55,7 @@ namespace Milieu.Web.Modules
                 {
                     Id = Guid.NewGuid(),
                     Name = model.Name,
-                    Location = new Venue.VenueLocation { Geo = model.Geo }
+                    Location = new Venue.VenueLocation { Geo = new[] { model.Longitude, model.Latitude } }
                 };
 
                 _data.Venues.Insert(venue);

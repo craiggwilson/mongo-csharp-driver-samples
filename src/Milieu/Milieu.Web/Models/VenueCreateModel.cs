@@ -9,6 +9,8 @@ namespace Milieu.Web.Models
     {
         public string Name { get; set; }
 
-        public double[] Geo { get; set; }
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
     }
 }

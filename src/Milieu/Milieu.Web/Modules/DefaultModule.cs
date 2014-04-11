@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Milieu.Web.Domain;
 using Milieu.Web.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Nancy;
@@ -16,15 +17,24 @@ namespace Milieu.Web.Modules
 {
     public class DefaultModule : MilieuModule
     {
-        private readonly MilieuDataContext _dataContext;
+        private readonly MilieuDataContext _data;
 
-        public DefaultModule(MilieuDataContext dataContext)
+        public DefaultModule(MilieuDataContext data)
         {
-            _dataContext = dataContext;
+            _data = data;
 
-            Get[""] = _ =>
+            Get["/"] = _ =>
             {
-                return View["Index"];
+                var userAvg = GetAveragePipeline("userId");
+                var venueAvg = GetAveragePipeline("venueId");
+
+                var model = new IndexModel
+                {
+                    AverageCheckinsPerUser = (int)Math.Floor(_data.Checkins.Aggregate(userAvg).ResultDocuments.Single()["avg"].ToDouble()),
+                    AverageCheckinsPerVenue = (int)Math.Floor(_data.Checkins.Aggregate(venueAvg).ResultDocuments.Single()["avg"].ToDouble())
+                };
+
+                return View["Index", model];
             };
 
             Get["/login"] = p =>
@@ -36,7 +46,7 @@ namespace Milieu.Web.Modules
             {
                 var model = this.Bind<RegisterModel>();
 
-                var user = _dataContext.Users.AsQueryable()
+                var user = _data.Users.AsQueryable()
                     .SingleOrDefault(x => x.Email == model.Email);
 
                 // THESE ARE NOT THE PLAINTEXT PASSWORDS YOU ARE LOOKING FOR!
@@ -62,13 +72,13 @@ namespace Milieu.Web.Modules
                     Id = Guid.NewGuid(),
                     Name = model.Name,
                     Email = model.Email,
-                    Password = model.Password,
+                    Password = model.Password, // YES, I KNOW!!!
                     Claims = new List<string> { Claims.VenueCheckin, Claims.UserDashboard },
                 };
 
                 try
                 {
-                    _dataContext.Users.Save(user);
+                    _data.Users.Save(user);
                 }
                 catch(MongoDuplicateKeyException)
                 {
@@ -77,6 +87,27 @@ namespace Milieu.Web.Modules
 
                 return this.Response.AsRedirect(string.Format("~/user/{0}", user.Email));
             };
+        }
+
+        private IEnumerable<BsonDocument> GetAveragePipeline(string groupFieldName)
+        {
+            var firstGroup = new BsonDocument("$group", new BsonDocument
+            {
+                { "_id", "$_id." + groupFieldName },
+                { "sum", new BsonDocument
+                        {
+                            { "$sum", new BsonDocument("$size", "$timesUtc") }
+                        }}
+            });
+
+            var secondGroup = new BsonDocument("$group", new BsonDocument
+            {
+                { "_id", 1 },
+                { "avg", new BsonDocument("$avg", "$sum") }
+            });
+
+            yield return firstGroup;
+            yield return secondGroup;
         }
     }
 }
