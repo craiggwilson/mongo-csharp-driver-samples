@@ -7,14 +7,26 @@
             <hr />
             <img src="@Html.UserGravatar(Model.Email)" />
             <h3>Checkin Stats</h3>
-            <div>Total Checkins: @Model.Stats.TotalCheckins</div>
-            <div>Total Locations: @Model.Stats.TotalLocations</div>
-            @if(Model.Stats.LastVenueName != null)
-            {
-                <div>Last Checked into @Model.Stats.LastVenueName at @Model.Stats.LastCheckinTimeUtc</div>
-            }
+            <div>Total Checkins: @Model.TotalCheckins</div>
+            <div>Total Locations: @Model.TotalLocations</div>
             <h2>Checkins</h2>
-            <div>do something here</div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Time (UTC)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var checkin in Model.LatestCheckins)
+                    { 
+                        <tr>
+                            <td><a href="@Url.Content("~/venues/" + @checkin.VenueId)">@checkin.VenueName</a></td>
+                            <td>@checkin.TimeUtc</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

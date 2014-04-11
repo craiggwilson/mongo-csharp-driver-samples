@@ -13,15 +13,6 @@
         </div>
     </div>
     <div class="row">
-        <h2>Nearby Venues</h2>
-        @foreach(var venue in Model.Nearby)
-        {
-            <h3>
-                <a href="@Url.Content("~/venue/" + venue.Id)">@venue.Name</a>
-            </h3>
-            <div>
-                MAP
-            </div>
-        }
+        <img src="@Model.MapUrl" />
     </div>
 </div>

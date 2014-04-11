@@ -104,7 +104,37 @@ namespace Milieu.Web
                     }
                 };
 
-                data.Venues.Save(venue1);
+                var venue2 = new Venue
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Maggianos",
+                    Location = new Venue.VenueLocation
+                    {
+                        Geo = new[] { -96.773062, 32.867026 }
+                    }
+                };
+
+                var venue3 = new Venue
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Blue Mesa Grill",
+                    Location = new Venue.VenueLocation
+                    {
+                        Geo = new[] { -96.773491, 32.864341 }
+                    }
+                };
+
+                var venue4 = new Venue
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Gordon Biersch",
+                    Location = new Venue.VenueLocation
+                    {
+                        Geo = new[] { -96.768685, 32.870018 }
+                    }
+                };
+
+                data.Venues.InsertBatch(new [] { venue1, venue2, venue3, venue4 });
             }
         }
     }

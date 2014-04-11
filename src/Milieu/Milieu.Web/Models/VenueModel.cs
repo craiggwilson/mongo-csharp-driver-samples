@@ -18,6 +18,8 @@ namespace Milieu.Web.Models
 
         public double[] Geo { get; set; }
 
+        public string MapUrl { get; set; }
+
         public List<NearbyVenue> Nearby { get; set; }
 
         public class NearbyVenue

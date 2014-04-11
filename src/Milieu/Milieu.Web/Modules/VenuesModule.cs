@@ -13,6 +13,9 @@ using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using MongoDB.Bson;
+using GoogleMapsApi.StaticMaps;
+using GoogleMapsApi.StaticMaps.Entities;
+using GoogleMapsApi.Entities.Common;
 
 namespace Milieu.Web.Modules
 {
@@ -72,19 +75,37 @@ namespace Milieu.Web.Modules
                     return "No such venue exists.";
 
                 // Get Nearby venues
-                // SERVER-13456
-                //var query = Query<Venue>.Near(x => x.Location.Geo, 
-                //    new GeoJsonPoint<GeoJson2DCoordinates>(
-                //        new GeoJson2DCoordinates(venue.Location.Geo[0], venue.Location.Geo[1])));
                 var query = Query<Venue>.Near(x => x.Location.Geo, venue.Location.Geo[0], venue.Location.Geo[1]);
-
                 var nearbyVenues = _data.Venues.Find(query).SetSkip(1).SetLimit(4).ToList();
+
+                // Map the nearby venues
+                var engine = new StaticMapsEngine();
+                var markers = new List<Marker>
+                {
+                    new Marker 
+                    { 
+                        Style = new MarkerStyle { Label = venue.Name, Color = "0x720000" }, 
+                        Locations = new List<ILocationString> { new Location(venue.Location.Geo[1], venue.Location.Geo[0]) } 
+                    }
+                };
+
+                foreach(var nearbyVenue in nearbyVenues)
+                {
+                    markers.Add(new Marker
+                    {
+                        Style = new MarkerStyle { Label = nearbyVenue.Name, Color = "0x587cdc" },
+                        Locations = new List<ILocationString> {  new Location(nearbyVenue.Location.Geo[1], nearbyVenue.Location.Geo[0]) }
+                    });
+                }
+
+                var request = new StaticMapRequest(markers, new ImageSize(800, 600));
 
                 var model = new VenueModel
                 {
                     Id = venue.Id,
                     Name = venue.Name,
                     Geo = venue.Location.Geo,
+                    MapUrl = engine.GenerateStaticMapURL(request),
                     TotalCheckins = venue.TotalCheckins,
                     TotalUsers = venue.TotalUsers,
                     Nearby = nearbyVenues.Select(x => new VenueModel.NearbyVenue

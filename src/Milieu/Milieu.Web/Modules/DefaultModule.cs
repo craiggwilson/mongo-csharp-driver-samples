@@ -30,8 +30,8 @@ namespace Milieu.Web.Modules
 
                 var model = new IndexModel
                 {
-                    AverageCheckinsPerUser = (int)Math.Floor(_data.Checkins.Aggregate(userAvg).ResultDocuments.Single()["avg"].ToDouble()),
-                    AverageCheckinsPerVenue = (int)Math.Floor(_data.Checkins.Aggregate(venueAvg).ResultDocuments.Single()["avg"].ToDouble())
+                    AverageCheckinsPerUser = (int)Math.Floor(_data.Checkins.Aggregate(userAvg).ResultDocuments.DefaultIfEmpty(new BsonDocument("avg", 0)).Single()["avg"].ToDouble()),
+                    AverageCheckinsPerVenue = (int)Math.Floor(_data.Checkins.Aggregate(venueAvg).ResultDocuments.DefaultIfEmpty(new BsonDocument("avg", 0)).Single()["avg"].ToDouble())
                 };
 
                 return View["Index", model];
@@ -50,7 +50,7 @@ namespace Milieu.Web.Modules
                     .SingleOrDefault(x => x.Email == model.Email);
 
                 // THESE ARE NOT THE PLAINTEXT PASSWORDS YOU ARE LOOKING FOR!
-                if(user == null || user.Password != model.Password)
+                if (user == null || user.Password != model.Password)
                 {
                     return "Username or password are invalid.";
                 }
@@ -80,7 +80,7 @@ namespace Milieu.Web.Modules
                 {
                     _data.Users.Save(user);
                 }
-                catch(MongoDuplicateKeyException)
+                catch (MongoDuplicateKeyException)
                 {
                     return "Someone already has your username.";
                 }

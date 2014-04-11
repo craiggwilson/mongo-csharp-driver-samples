@@ -36,12 +36,17 @@ namespace Milieu.Web.Modules
                 {
                     Name = user.Name,
                     Email = user.Email,
-                    Stats = new UserDashboardModel.Statistics
-                    {
-                        LastCheckinTimeUtc = user.LastCheckin == null ? (DateTime?)null : user.LastCheckin.TimeUtc,
-                        TotalCheckins = user.TotalCheckins,
-                        TotalLocations = user.VenueCheckins == null ? 0 : user.VenueCheckins.Count
-                    }
+                    TotalCheckins = user.TotalCheckins,
+                    TotalLocations = user.VenueCheckins == null ? 0 : user.VenueCheckins.Count,
+                    LatestCheckins = user.VenueCheckins
+                        .OrderByDescending(x => x.Value.TimeUtc)
+                        .Select(x => new UserDashboardModel.Checkin
+                        {
+                            VenueId = x.Key,
+                            VenueName = x.Value.Name,
+                            TimeUtc = x.Value.TimeUtc
+                        })
+                        .ToList()
                 };
 
                 return View["Dashboard", model];

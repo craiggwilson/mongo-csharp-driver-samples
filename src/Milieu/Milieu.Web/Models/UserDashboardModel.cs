@@ -11,17 +11,19 @@ namespace Milieu.Web.Models
 
         public string Email { get; set; }
 
-        public Statistics Stats { get; set; }
+        public int TotalCheckins { get; set; }
+        
+        public int TotalLocations { get; set; }
 
-        public class Statistics
+        public List<Checkin> LatestCheckins { get; set; }
+
+        public class Checkin
         {
-            public int TotalCheckins { get; set; }
+            public Guid VenueId { get; set; }
 
-            public int TotalLocations { get; set; }
+            public string VenueName { get; set; }
 
-            public string LastVenueName { get; set; }
-
-            public DateTime? LastCheckinTimeUtc { get; set; }
+            public DateTime TimeUtc { get; set; }
         }
     }
 }
