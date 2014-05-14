@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="coffeeApp">
+<head>
+    <title>Order Some Coffee</title>
+
+    <link rel="stylesheet" type="text/css" href="Content/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <div ng-controller="DrinksController" class="container">
+        <form ng-submit="giveMeCoffee()">
+            <div class="form-group">
+                <label>Drink</label>
+                <select ng-model="drink.type" ng-options="type.name for type in types | orderBy:'name'" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <label>Size</label>
+                <select ng-model="drink.size" ng-options="size for size in sizes" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" ng-model="drink.drinker" ng-required="true" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Give me Coffee!!!" class="btn btn-default btn-lg" />
+            </div>
+        </form>
+        {{drink|json}}
+    </div>
+
+    <script type="text/javascript" src="Scripts/angular.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-resource.min.js"></script>
+    <script type="text/javascript" src="Scripts/coffee.js"></script>
+</body>
+</html>

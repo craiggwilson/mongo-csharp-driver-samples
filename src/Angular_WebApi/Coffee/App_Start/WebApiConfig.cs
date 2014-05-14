@@ -15,11 +15,6 @@ namespace Coffee
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "SPA",
-                routeTemplate: "{controller}",
-                defaults: new { controller = "Home" });
-
-            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
