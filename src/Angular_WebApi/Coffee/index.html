@@ -8,6 +8,13 @@
 </head>
 <body>
     <div ng-controller="DrinksController" class="container">
+        <alert ng-repeat="message in messages" type="{{message.type}}" close="closeAlert($index)">
+            {{message.msg}}
+            <div ng-show="message.orderId">
+                <a ng-href="/api/coffeeshop/{{message.coffeeShopId}}/order/{{message.orderId}}">Order Details</a>
+            </div>
+        </alert>
+
         <form ng-submit="giveMeCoffee()">
             <div class="form-group">
                 <label>Drink</label>
@@ -20,6 +27,18 @@
             </div>
 
             <div class="form-group">
+                <label for="newOption">Options</label>
+                <input type="text" ng-model="newOption"
+                       typeahead="option.name for option in availableOptions | filter:$viewValue | orderBy:'name'"
+                       typeahead-on-select="addOption()"
+                       class="form-control" placeholder="Type extras here!!!" />
+            </div>
+
+            <div class="form-group">
+                <span ng-repeat="option in drink.selectedOptions">{{option}}; </span>
+            </div>
+
+            <div class="form-group">
                 <label>Name</label>
                 <input type="text" ng-model="drink.drinker" ng-required="true" class="form-control" />
             </div>
@@ -28,11 +47,12 @@
                 <input type="submit" value="Give me Coffee!!!" class="btn btn-default btn-lg" />
             </div>
         </form>
-        {{drink|json}}
+        <pre>{{drink|json}}</pre>
     </div>
 
     <script type="text/javascript" src="Scripts/angular.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-resource.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript" src="Scripts/coffee.js"></script>
 </body>
 </html>
