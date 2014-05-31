@@ -17,9 +17,9 @@ namespace Coffee.Controllers
     {
         private readonly CoffeeShopContext _data = new CoffeeShopContext();
 
-        [Route("{id:int}/order/{orderId}", Name = "GetOrder")]
+        [Route("{id}/order/{orderId}", Name = "GetOrder")]
         [HttpGet]
-        public HttpResponseMessage GetOrder(int id, string orderId)
+        public HttpResponseMessage GetOrder(string id, string orderId)
         {
             var order = (from o in _data.Orders.AsQueryable()
                          where o.CoffeeShopId == id.ToString() && o.Id == orderId
@@ -33,11 +33,26 @@ namespace Coffee.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, order);
         }
 
-        [Route("{id:int}/order", Name = "SubmitOrder")]
-        [HttpPost]
-        public HttpResponseMessage SubmitOrder(int id, [FromBody] Order order)
+        [Route("", Name = "GetShops")]
+        [HttpGet]
+        public HttpResponseMessage GetShops(double? latitude = null, double? longitude = null)
         {
-            order.CoffeeShopId = id.ToString();
+            IMongoQuery query = Query.Null;
+            if (latitude.HasValue && longitude.HasValue)
+            {
+                query = Query<Shop>.Near(x => x.Location, longitude.Value, latitude.Value);
+            }
+
+            var shops = _data.Shops.Find(query).SetLimit(10).ToList();
+
+            return Request.CreateResponse(HttpStatusCode.OK, shops);
+        }
+
+        [Route("{id}/order", Name = "SubmitOrder")]
+        [HttpPost]
+        public HttpResponseMessage SubmitOrder(string id, [FromBody] Order order)
+        {
+            order.CoffeeShopId = id;
             _data.Orders.Save(order);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, order);

@@ -12,7 +12,7 @@ namespace Coffee.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("csid")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string CoffeeShopId { get; set; }
 
         public DrinkType Type { get; set; }

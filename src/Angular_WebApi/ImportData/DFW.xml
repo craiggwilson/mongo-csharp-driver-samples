@@ -1,0 +1,56 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="Osmosis SNAPSHOT-r26564">
+  <node id="761771822" version="2" timestamp="2012-03-02T05:45:28Z" uid="613751" user="Cartographer1973" changeset="10844694" lat="33.2148658" lon="-97.1322417">
+    <tag k="wifi" v="free"/>
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Jupiter House"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="1418910856" version="5" timestamp="2011-08-31T17:41:23Z" uid="70696" user="xybot" changeset="9178140" lat="32.9331882" lon="-96.8188624">
+    <tag k="phone" v="972-960-9595"/>
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="website" v="http://www.starbucks.com"/>
+    <tag k="name" v="Starbucks"/>
+    <tag k="amenity" v="cafe"/>
+    <tag k="addr:street" v="5223 alpha road dallas tx 75240"/>
+    <tag k="type" v="cafe"/>
+  </node>
+  <node id="1423520902" version="1" timestamp="2011-09-04T23:12:59Z" uid="330630" user="Dranuhl" changeset="9213441" lat="32.8920676" lon="-96.9604013">
+    <tag k="addr:postcode" v="75039"/>
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="website" v="http://www.starbucks.com/"/>
+    <tag k="addr:country" v="US"/>
+    <tag k="name" v="Starbucks"/>
+    <tag k="amenity" v="cafe"/>
+    <tag k="addr:street" v="North Macarthur Boulevard"/>
+    <tag k="addr:state" v="TX"/>
+    <tag k="addr:city" v="Irving"/>
+    <tag k="addr:housenumber" v="5904"/>
+  </node>
+  <node id="1570037953" version="3" timestamp="2012-01-10T03:08:23Z" uid="581419" user="jazztunes" changeset="10348033" lat="32.9777981" lon="-96.7676211">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Starbucks"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="1583508997" version="2" timestamp="2012-01-16T18:51:11Z" uid="581419" user="jazztunes" changeset="10410917" lat="32.8951059" lon="-96.7395008">
+    <tag k="wifi" v="yes"/>
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Starbucks"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="1584209933" version="2" timestamp="2012-01-10T02:43:01Z" uid="581419" user="jazztunes" changeset="10348033" lat="32.9749833" lon="-96.7172236">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Starbucks"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="1606996520" version="1" timestamp="2012-01-26T22:28:49Z" uid="554333" user="ZargonGod" changeset="10507469" lat="33.0095449" lon="-96.5445116">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Starbucks"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="1611955009" version="1" timestamp="2012-01-30T16:20:53Z" uid="554333" user="ZargonGod" changeset="10541188" lat="33.0143741" lon="-96.5390927">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Shoemaker &amp; Hardt"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+</osm>

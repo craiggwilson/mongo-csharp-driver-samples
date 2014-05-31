@@ -1,0 +1,35 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="Osmosis SNAPSHOT-r26564">
+  <node id="302026073" version="6" timestamp="2012-01-18T14:54:49Z" uid="589192" user="devotio" changeset="10428081" lat="59.9347462" lon="10.764385">
+    <tag k="wifi" v="no"/>
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Kaffebrenneriet"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="499994680" version="3" timestamp="2010-07-06T12:10:05Z" uid="86121" user="zarkzervo" changeset="5149987" lat="59.913607" lon="10.740996">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="addr:country" v="NO"/>
+    <tag k="name" v="Stockfleth&apos;s"/>
+    <tag k="amenity" v="cafe"/>
+    <tag k="addr:city" v="Oslo"/>
+  </node>
+  <node id="499995086" version="4" timestamp="2012-01-24T09:15:05Z" uid="290680" user="wheelmap_visitor" changeset="10481833" lat="59.9153836" lon="10.7416618">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="wheelchair" v="limited"/>
+    <tag k="addr:country" v="NO"/>
+    <tag k="name" v="Stockfleth&apos;s"/>
+    <tag k="amenity" v="cafe"/>
+    <tag k="addr:city" v="Oslo"/>
+  </node>
+  <node id="499995891" version="1" timestamp="2009-09-18T08:28:30Z" uid="86121" user="zarkzervo" changeset="2521082" lat="59.9233832" lon="10.7556953">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="name" v="Tim Wendelboe"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+  <node id="500193198" version="3" timestamp="2011-11-06T00:25:29Z" uid="290680" user="wheelmap_visitor" changeset="9744488" lat="59.9104891" lon="10.7465548">
+    <tag k="cuisine" v="coffee_shop"/>
+    <tag k="wheelchair" v="no"/>
+    <tag k="name" v="Stockfleths"/>
+    <tag k="amenity" v="cafe"/>
+  </node>
+</osm>

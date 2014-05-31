@@ -386,6 +386,7 @@
     </Compile>
     <Compile Include="Models\DrinkType.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Shop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

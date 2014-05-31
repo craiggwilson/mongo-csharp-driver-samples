@@ -17,6 +17,11 @@
 
         <form ng-submit="giveMeCoffee()">
             <div class="form-group">
+                <label>Shop</label>
+                <select ng-model="coffeeShop" ng-options="shop.Name for shop in shops" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
                 <label>Drink</label>
                 <select ng-model="drink.type" ng-options="type.name for type in types | orderBy:'name'" class="form-control"></select>
             </div>

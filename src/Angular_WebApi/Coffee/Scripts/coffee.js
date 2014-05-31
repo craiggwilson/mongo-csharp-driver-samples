@@ -1,11 +1,21 @@
 ﻿var coffeeApp = angular.module('coffeeApp', ['ngResource', 'ui.bootstrap']);
 
-coffeeApp.factory('CoffeeOrder', function ($resource) {
-    return $resource('/api/coffeeshop/:id/order/',
-        { id: "@coffeeShopId" }, {});
+coffeeApp.factory('CoffeeShop', function ($resource) {
+    return $resource(
+        '/api/coffeeshop?latitude=:latitude&longitude=:longitude',
+        { latitude: "@latitude", longitude: "@longitude" })
 });
 
-coffeeApp.controller('DrinksController', function ($scope, CoffeeOrder) {
+coffeeApp.factory('CoffeeOrder', function ($resource) {
+    return $resource(
+        '/api/coffeeshop/:id/order',
+        { id: "@id" });
+});
+
+coffeeApp.controller('DrinksController', function ($scope, CoffeeShop, CoffeeOrder) {
+
+    $scope.shops = CoffeeShop.query({ latitude: 59.9104891, longitude: 10.7465548 });
+
     $scope.types = [
         { name: "Americano", family: "Coffee" },
         { name: "Latte", family: "Coffee" },
@@ -27,7 +37,7 @@ coffeeApp.controller('DrinksController', function ($scope, CoffeeOrder) {
     $scope.messages = [];
 
     $scope.giveMeCoffee = function () {
-        CoffeeOrder.save({ id: 1 }, $scope.drink, function (order) {
+        CoffeeOrder.save({ id: $scope.coffeeShop.Id }, $scope.drink, function (order) {
             $scope.messages.push({ type: "success", msg: "Order Sent!", coffeeShopId: order.CoffeeShopId, orderId: order.Id });
         });
     };
