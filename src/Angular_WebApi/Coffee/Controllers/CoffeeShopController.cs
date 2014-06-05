@@ -22,7 +22,7 @@ namespace Coffee.Controllers
         public HttpResponseMessage GetOrder(string id, string orderId)
         {
             var order = (from o in _data.Orders.AsQueryable()
-                         where o.CoffeeShopId == id.ToString() && o.Id == orderId
+                         where o.CoffeeShopId == id && o.Id == orderId
                          select o).FirstOrDefault();
 
             if (order == null)

@@ -36,7 +36,7 @@ coffeeApp.controller('DrinksController', function ($scope, CoffeeShop, CoffeeOrd
 
     $scope.messages = [];
 
-    $scope.giveMeCoffee = function () {
+    $scope.placeOrder = function () {
         CoffeeOrder.save({ id: $scope.coffeeShop.Id }, $scope.drink, function (order) {
             $scope.messages.push({ type: "success", msg: "Order Sent!", coffeeShopId: order.CoffeeShopId, orderId: order.Id });
         });

@@ -21,7 +21,6 @@ namespace Coffee.Models
             conventions.Add(new CamelCaseElementNameConvention());
             ConventionRegistry.Register("coffeeshop", conventions, t => true);
 
-            // let's also create an index for the geo query
             _db.GetCollection("shops").CreateIndex(
                 IndexKeys<Shop>.GeoSpatial(x => x.Location));
         }
