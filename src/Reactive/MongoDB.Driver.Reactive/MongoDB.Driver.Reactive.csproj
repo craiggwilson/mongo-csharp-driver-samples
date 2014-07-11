@@ -57,11 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MongoCursorExtensions.cs" />
+    <Compile Include="Oplog\Entries\IOplogEntryProcessor.cs" />
+    <Compile Include="Oplog\Entries\OplogEntryProcessor.cs" />
+    <Compile Include="Oplog\Entries\OplogEntryProcessorBase.cs" />
+    <Compile Include="Oplog\Entries\OplogEntryProcessorMap.cs" />
+    <Compile Include="Oplog\Entries\UpdateOplogEntry.cs" />
+    <Compile Include="Oplog\Entries\DeleteOplogEntry.cs" />
+    <Compile Include="Oplog\Entries\NoOpOplogEntry.cs" />
+    <Compile Include="Oplog\Entries\InsertOplogEntry.cs" />
+    <Compile Include="Oplog\Entries\IOplogEntryFactory.cs" />
+    <Compile Include="Oplog\Entries\OplogEntry.cs" />
+    <Compile Include="Oplog\Entries\OplogEntryFactoryBase.cs" />
+    <Compile Include="Oplog\Entries\OplogEntryRegistry.cs" />
+    <Compile Include="Oplog\Entries\OplogEntryType.cs" />
+    <Compile Include="Oplog\Entries\UnrecognizedOplogEntryException.cs" />
+    <Compile Include="Oplog\IOplogMonitor.cs" />
+    <Compile Include="Oplog\OplogMonitor.cs" />
+    <Compile Include="Tailable.Extensions.cs" />
     <Compile Include="MongoTailableCursorObservable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Oplog\Oplog.Extensions.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

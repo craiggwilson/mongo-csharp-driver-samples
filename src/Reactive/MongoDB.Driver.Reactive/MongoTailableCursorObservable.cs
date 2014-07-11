@@ -27,10 +27,7 @@ namespace MongoDB.Driver.Reactive
 
         public MongoTailableCursorObservable(MongoCollection<T> collection, IMongoQuery initialQuery = null, Func<T, IMongoQuery> queryFactory = null, IMongoFields fields = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException("collection");
-            }
+            if (collection == null) throw new ArgumentNullException("collection");
 
             _collection = collection;
             _initialQuery = initialQuery;
@@ -40,7 +37,8 @@ namespace MongoDB.Driver.Reactive
             _observers = new List<IObserver<T>>();
             _thread = new Thread(Run)
             {
-                IsBackground = true
+                IsBackground = true,
+                Name = "Tailable Cursor on " + collection.FullName
             };
         }
 
@@ -85,7 +83,7 @@ namespace MongoDB.Driver.Reactive
                 cursor = _collection.FindAll().SetFields(_fields);
             }
             var flags = QueryFlags.TailableCursor;
-            if (_collection.Database.Name == "local" && _collection.Name == "oplog")
+            if (_collection.Database.Name == "local" && _collection.Name == "oplog.rs")
             {
                 flags |= (QueryFlags)8;
             }

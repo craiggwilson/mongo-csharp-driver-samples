@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MongoDB.Driver.Reactive
 {
-    public static class MongoCursorExtensions
+    public static class TailableExtensions
     {
         public static IObservable<T> Tail<T>(this MongoCollection<T> collection, IMongoQuery initialQuery = null, Func<T, IMongoQuery> queryFactory = null, IMongoFields fields = null)
         {
