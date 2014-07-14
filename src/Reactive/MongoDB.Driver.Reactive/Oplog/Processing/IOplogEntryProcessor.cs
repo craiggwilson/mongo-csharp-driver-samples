@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDB.Driver.Reactive.Oplog.Entries
+namespace MongoDB.Driver.Reactive.Oplog.Processing
 {
     public interface IOplogEntryProcessor
     {
